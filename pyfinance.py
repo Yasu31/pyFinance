@@ -13,11 +13,19 @@ class CurrencyType(Enum):
 class ExpenseType(Enum):
     """
     TWINT payments from friends should be counted as expense for whatever that pays for.
+    DO NOT change the values of the enum members as they are used in the database.
     """
     RESTAURANT = 'r'
     GROCERY = 'g'
     TRANSPORTATION = 't'
     INCOME = 'i'  # in which case this is not counted as an expense
+    COMMUNICATIONS = 'c'
+    ADMINISTRATIVE = 'a'  # tax, city registration fee, etc
+    RENT = 'rent'
+    HOUSEHOLD = 'h'  # non-food items for daily use
+    INSURANCE = 'in'  # health insurance etc
+    PARTY = 'p'  # for home parties
+    TRANSFER = 'tr'  # transferring money between my accounts. Not counted as expense
     OTHER = 'o'
     UNSORTED = 'u'
 
@@ -41,7 +49,7 @@ class ExpenseItem:
         print(f"what type of expense is \"{self.description}\" on {self.date}, costing {self.amount} {self.currency}?")
         options = ""
         for i, expense_type in enumerate(ExpenseType):
-            options += f"{i}: {expense_type.name} ({expense_type.value})\n"
+            options += f"{expense_type.value}: {expense_type.name}\n"
         print(options)
         choice = input()
         while True:
@@ -51,6 +59,13 @@ class ExpenseItem:
             except ValueError:
                 print("invalid choice, try again")
                 choice = input()
+    
+    def getConvertedValue(self, currency_type):
+        if self.currency == currency_type:
+            return self.amount
+        if currency_type == CurrencyType.CHF and self.currency == CurrencyType.JPY:
+            return self.amount / 140.
+        raise NotImplementedError(f"conversion from {self.currency} to {currency_type} not implemented")
 
 
 def generateExpenseItemsFromRawCSV(filename):
