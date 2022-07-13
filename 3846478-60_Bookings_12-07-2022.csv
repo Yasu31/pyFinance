@@ -1,0 +1,40 @@
+﻿Created on 12.07.2022 23:33:45 CEST
+Bookings
+Account,"Private account CSX,CH04 0483 5384 6478 6000 0,Yasunori Toshimitsu, Schlieren"
+Balance,45.11 CHF
+Booking Entries from 13.01.2022 - 12.07.2022 
+Booking Date,Text,Debit,Credit,Balance
+Provisional Booking,"Pre-booking Debit Card                          ,POS 12.07.2022 MIGROS M ALBISRIEDERP",16.75,,5.41
+Provisional Booking,"Pre-booking Debit Card                          ,POS 12.07.2022 COOP-1905 ZH BAHNHOFB",7.95,,
+Provisional Booking,"Pre-booking Debit Card                          ,POS 11.07.2022 RESTAURANT BAUSCHANZL",15.00,,
+11.07.2022,"Debit card point of sale payment CHF ,07.07.2022 09:06 Migros M Hauptbahnh ,card no 5574 88XX XXXX 5860 ",1.90,,45.11
+11.07.2022,"Debit card point of sale payment CHF ,09.07.2022 16:34 Migros M Albisriede ,card no 5574 88XX XXXX 5860 ",2.20,,
+10.07.2022,"TWINT Payment ,Kubo, Fumimasa +41784031054 ,of 09.07.22 at 20:58,Kubo, Fumimasa,+41784031054 ",30.00,,49.21
+08.07.2022,"Debit card point of sale payment CHF ,06.07.2022 19:06 Migros M Schlieren- ,card no 5574 88XX XXXX 5860 ",5.55,,79.21
+08.07.2022,"Debit card point of sale payment CHF ,07.07.2022 11:13 Züri Bistro Campus ,card no 5574 88XX XXXX 5860 ",10.00,,
+07.07.2022,"Debit card point of sale payment CHF ,05.07.2022 15:15 Coop-1905 ZH Bahnho ,card no 5574 88XX XXXX 5860 ",3.75,,94.76
+07.07.2022,"Debit card point of sale payment CHF ,05.07.2022 18:06 PAO PAO MODERN TEA ,card no 5574 88XX XXXX 5860 ",9.00,,
+07.07.2022,"Debit card e-payment CHF ,05.07.2022 09:41 SBB CFF FFS Mobile ,card no 5574 88XX XXXX 5860 ",13.60,,
+07.07.2022,"Debit card point of sale payment CHF ,06.07.2022 11:47 SV (Schweiz) AG, 27 ,card no 5574 88XX XXXX 5860 ",14.80,,
+07.07.2022,"Debit card point of sale payment CHF ,06.07.2022 09:54 Stadt Schlieren ,card no 5574 88XX XXXX 5860 ",162.00,,
+06.07.2022,"Debit card e-payment CHF ,04.07.2022 12:59 SBB CFF FFS Mobile ,card no 5574 88XX XXXX 5860 ",13.60,,297.91
+06.07.2022,"Debit card point of sale payment CHF ,04.07.2022 19:19 Migros M Schlieren- ,card no 5574 88XX XXXX 5860 ",21.75,,
+06.07.2022,"Debit card point of sale payment CHF ,04.07.2022 18:19 Coop-1957 Schlieren ,card no 5574 88XX XXXX 5860 ",37.50,,
+06.07.2022,"Debit card point of sale payment CHF ,04.07.2022 17:34 YumiHana ,card no 5574 88XX XXXX 5860 ",49.60,,
+06.07.2022,"CHF deposit at CS ATM ,05.07.2022 15:07 CS ZH Werdmuehle 6 ,card no 5574 88XX XXXX 5860 ",,190.00,
+04.07.2022,"Debit card point of sale payment CHF ,30.06.2022 10:57 Lidl Zuerich, Fraum ,card no 5574 88XX XXXX 5860 ",1.45,,230.36
+04.07.2022,"Debit card point of sale payment CHF ,30.06.2022 16:30 Selecta AG / PrV ,card no 5574 88XX XXXX 5860 ",1.60,,
+04.07.2022,"Debit card point of sale payment CHF ,02.07.2022 12:26 IKEA AG, Spreitenba ,card no 5574 88XX XXXX 5860 ",6.00,,
+04.07.2022,"Debit card point of sale payment CHF ,02.07.2022 18:51 Coop Pronto Schlier ,card no 5574 88XX XXXX 5860 ",8.45,,
+04.07.2022,"Debit card point of sale payment CHF ,01.07.2022 08:53 VBZ Schlieren Zentr ,card no 5574 88XX XXXX 5860 ",13.60,,
+04.07.2022,"Debit card point of sale payment CHF ,30.06.2022 19:48 PG 8004 ZUERICH LAN ,card no 5574 88XX XXXX 5860 ",38.00,,
+01.07.2022,"Debit card point of sale payment CHF ,30.06.2022 10:43 Post CH AG (8625) Z ,card no 5574 88XX XXXX 5860 ",8.80,,299.46
+01.07.2022,"Debit card point of sale payment CHF ,29.06.2022 18:06 VBZ Schlieren Zentr ,card no 5574 88XX XXXX 5860 ",13.60,,
+01.07.2022,"Debit card point of sale payment CHF ,29.06.2022 18:01 Coop-1957 Schlieren ,card no 5574 88XX XXXX 5860 ",26.85,,
+01.07.2022,"Payment order ,P23220849 ,DNCS-20220630-IXN0-TXN0,P23220849,SP-49522732-0,WISE LTD SWITZERLAND,8002 Zurich,P23220849,JPMorgan Chase Bank, National,Association, Columbus,Dreikönigstrasse 37 8027 Zürich CH ",50.00,,
+30.06.2022,"TWINT Payment ,Digitec Galaxus 8005 Zürich ,of 29.06.22 at 11:27,Digitec Galaxus,8005 Zürich ",23.90,,398.71
+29.06.2022,"TWINT Payment ,Hontani, Yusaku +41765155464 ,of 28.06.22 at 21:27,Hontani, Yusaku,+41765155464 ",30.00,,422.61
+29.06.2022,"Debit card point of sale payment CHF ,28.06.2022 12:12 Migros M Schlieren- ,card no 5574 88XX XXXX 5860 ",47.40,,
+29.06.2022,"TWINT Payment ,Salt Mobile SA 1020 Renens ,of 28.06.22 at 15:56,Salt Mobile SA,1020 Renens ",179.95,,
+28.06.2022,"Payment QR-bill ,Advisor International Health lnsuran ,DNCS-20220627-IXN0-TXN0,SP-59557962-0,Advisor International Health,lnsurance (Suisse) SA,Avenue de Provence 4 1007 lausanne,Période : 27.06.2022 - 31.08.2022,UBS Switzerland AG,Bahnhofstrasse 45 8098 Zürich CH ",184.80,,679.96
+TOTAL OF COLUMN,,1049.35,190.00,
