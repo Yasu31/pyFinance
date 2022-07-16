@@ -34,7 +34,7 @@ def plot_expenses_by_type(expense_items):
     pyplot_tools.format_figure(ax)
     bottom = np.zeros(len(weeks))
     for et in ExpenseType:
-        if et == ExpenseType.INCOME or et == ExpenseType.TRANSFER:
+        if et in [ExpenseType.INCOME, ExpenseType.TRANSFER, ExpenseType.TO_BE_REIMBURSED]:
             continue
         data = expenses_by_type[et.name]
         plt.bar(weeks, data, label=et.name, bottom=bottom)

@@ -3,11 +3,18 @@ import numpy as np
 from enum import Enum, auto
 from datetime import datetime
 import os
+import re
 
 
 class CurrencyType(Enum):
     JPY = 'jpy'
     CHF = 'chf'
+
+
+class DataSourceType(Enum):
+    WISE_JPY = 'wisejpy'
+    WISE_CHF = 'wisechf'
+    CSX = 'csx'
 
 
 class ExpenseType(Enum):
@@ -26,6 +33,7 @@ class ExpenseType(Enum):
     INSURANCE = 'in'  # health insurance etc
     PARTY = 'p'  # for home parties
     TRANSFER = 'tr'  # transferring money between my accounts. Not counted as expense
+    TO_BE_REIMBURSED = 'tbr'  # will be reimbursed by the lab, so don't count as expense
     OTHER = 'o'
     UNSORTED = 'u'
 
@@ -70,30 +78,63 @@ class ExpenseItem:
 
 def generateExpenseItemsFromRawCSV(filename):
     # generate a list of ExpenseItem objects from a CSV file
-    # type and comment fields are not filled
-    # todo: this only supports credit suisse CSV formats
+    # type fields are not filled
+
+    # determine the data source type from the filename
+    if re.search('[0-9]{7}-[0-9]+_Bookings_[0-9]{2}-[0-9]{2}-[0-9]{4}.csv', filename):
+        datasource_type = DataSourceType.CSX
+    elif re.search('statement_[0-9]+_JPY_[0-9]{4}-[0-9]{2}-[0-9]{2}_[0-9]{4}-[0-9]{2}-[0-9]{2}.csv', filename):
+        datasource_type = DataSourceType.WISE_JPY
+    elif re.search('statement_[0-9]+_CHF_[0-9]{4}-[0-9]{2}-[0-9]{2}_[0-9]{4}-[0-9]{2}-[0-9]{2}.csv', filename):
+        datasource_type = DataSourceType.WISE_CHF
+    else:
+        raise NotImplementedError(f"datasource type for {filename} not implemented")
+    print(f"loading {filename} as {datasource_type}")
+
     with open(filename, 'r') as f:
-        # data begins from 4th row
-        data = pandas.read_csv(f, skiprows=5)
+        skiprows = 0
+        if datasource_type == DataSourceType.CSX:
+            # data begins from 6th row
+            skiprows = 5
+        data = pandas.read_csv(f, skiprows=skiprows)
     expense_items = []
     for index, row in data.iterrows():
-        date_string = row['Booking Date']
-        description = row['Text']
-        try:
-            date = datetime.strptime(date_string, '%d.%m.%Y')
-        except ValueError:
-            print(f"Error: date \"{date_string}\" is not in correct format for item \"{description}\", skipping")
-            continue
+        if datasource_type == DataSourceType.CSX:
+            date_string = row['Booking Date']
+            description = row['Text']
+            try:
+                date = datetime.strptime(date_string, '%d.%m.%Y')
+            except ValueError:
+                print(f"Error: date \"{date_string}\" is not in correct format for item \"{description}\", skipping")
+                continue
 
-        debit = float(row['Debit'])
-        if np.isnan(debit):
-            debit = 0.
-        credit = float(row['Credit'])
-        if np.isnan(credit):
-            credit = 0.
-        amount = debit - credit
-        
-        expense_item = ExpenseItem(date, description, ExpenseType.UNSORTED, amount, CurrencyType.CHF)
+            debit = float(row['Debit'])
+            if np.isnan(debit):
+                debit = 0.
+            credit = float(row['Credit'])
+            if np.isnan(credit):
+                credit = 0.
+            amount = debit - credit
+            
+            expense_item = ExpenseItem(date, description, ExpenseType.UNSORTED, amount, CurrencyType.CHF)
+        elif datasource_type == DataSourceType.WISE_JPY or datasource_type == DataSourceType.WISE_CHF:
+            date_string = row['Date']
+            description = row['Description']
+            try:
+                date = datetime.strptime(date_string, '%d-%m-%Y')
+            except ValueError:
+                print(f"Error: date \"{date_string}\" is not in correct format for item \"{description}\", skipping")
+                continue
+            amount = -float(row['Amount'])
+            comment = f"merchant: {row['Merchant']}, Wise ID: {row['TransferWise ID']}, Note: {row['Note']}, total fees: {row['Total fees']}"
+            if datasource_type == DataSourceType.WISE_JPY:
+                currency_type = CurrencyType.JPY
+                assert 'JPY' == row['Currency']
+            else:
+                currency_type = CurrencyType.CHF
+                assert 'CHF' == row['Currency']
+            expense_item = ExpenseItem(date, description, ExpenseType.UNSORTED, amount, currency_type, comment)
+            
         expense_items.append(expense_item)
     return expense_items
 
