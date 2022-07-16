@@ -69,6 +69,7 @@ class ExpenseItem:
                 choice = input()
     
     def getConvertedValue(self, currency_type):
+        # todo: use API to get actual conversion rate
         if self.currency == currency_type:
             return self.amount
         if currency_type == CurrencyType.CHF and self.currency == CurrencyType.JPY:
@@ -165,13 +166,15 @@ def loadExpenseItems():
 
 def saveExpenseItems(expense_items):
     """
-    save list of expense items to expense_database.csv
+    save list of expense items to expense_database.csv ordered by date
     """
     with open('expense_database.csv', 'w') as f:
         # use pandas
         data = pandas.DataFrame(columns=['date', 'description', 'type', 'amount', 'currency', 'comment'])
         for expense_item in expense_items:
             data.loc[len(data)] = [expense_item.date, expense_item.description, expense_item.type.value, expense_item.amount, expense_item.currency.value, expense_item.comment]
+        # sort by date
+        data.sort_values(by=['date'], inplace=True)
         data.to_csv(f, index=False)
 
 
