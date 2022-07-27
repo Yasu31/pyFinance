@@ -10,3 +10,4 @@ download CSV and label expenses once in a while
 for others, add by hand...
 
 ## track net worth
+input data from different sources manually?
