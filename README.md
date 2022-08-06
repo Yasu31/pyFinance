@@ -1,5 +1,7 @@
 # pyFinance
 
+todo: add example data
+
 ## installation
 if using virtual environment...
 ```bash
