@@ -1,8 +1,8 @@
-import pyplot_tools
+from pyFinance import pyplot_tools
+from pyFinance.pyFinance import ExpenseType, CurrencyType
 import matplotlib.pyplot as plt
 import numpy as np
 from datetime import date
-from pyfinance import ExpenseType, CurrencyType
 
 
 def plot_expenses_by_type(expense_items):
