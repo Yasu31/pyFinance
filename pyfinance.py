@@ -9,6 +9,7 @@ import re
 class CurrencyType(Enum):
     JPY = 'jpy'
     CHF = 'chf'
+    EUR = 'eur'
 
 
 class DataSourceType(Enum):
@@ -74,6 +75,8 @@ class ExpenseItem:
             return self.amount
         if currency_type == CurrencyType.CHF and self.currency == CurrencyType.JPY:
             return self.amount / 140.
+        if currency_type == CurrencyType.CHF and self.currency == CurrencyType.EUR:
+            return self.amount * 1.
         raise NotImplementedError(f"conversion from {self.currency} to {currency_type} not implemented")
 
 
@@ -170,11 +173,12 @@ def saveExpenseItems(expense_items):
     """
     with open('expense_database.csv', 'w') as f:
         # use pandas
-        data = pandas.DataFrame(columns=['date', 'description', 'type', 'amount', 'currency', 'comment'])
+        columns = ['date', 'description', 'type', 'amount', 'currency', 'comment']
+        data = pandas.DataFrame(columns=columns)
         for expense_item in expense_items:
             data.loc[len(data)] = [expense_item.date, expense_item.description, expense_item.type.value, expense_item.amount, expense_item.currency.value, expense_item.comment]
-        # sort by date
-        data.sort_values(by=['date'], inplace=True)
+        # using the column entries to sort will make sure output has same order every single time
+        data.sort_values(by=columns, inplace=True)
         data.to_csv(f, index=False)
 
 
