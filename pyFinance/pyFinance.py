@@ -25,7 +25,7 @@ class ExpenseType(Enum):
     """
     RESTAURANT = 'r'
     GROCERY = 'g'
-    TRANSPORTATION = 't'
+    TRANSPORTATION = 'tp'
     INCOME = 'i'  # in which case this is not counted as an expense
     COMMUNICATIONS = 'c'
     ADMINISTRATIVE = 'a'  # tax, city registration fee, etc
@@ -33,7 +33,9 @@ class ExpenseType(Enum):
     HOUSEHOLD = 'h'  # non-food items for daily use
     INSURANCE = 'in'  # health insurance etc
     PARTY = 'p'  # for home parties
-    TRANSFER = 'tr'  # transferring money between my accounts. Not counted as expense
+    ENTERTAINMENT = 'e'  # sightseeing, movies, games, etc.
+    SIGHTSEEING = 'ss'  # entrance to museums, hotel fees, etc.
+    TRANSFER = 'tf'  # transferring money between my accounts. Not counted as expense
     TO_BE_REIMBURSED = 'tbr'  # will be reimbursed by the lab, so don't count as expense
     OTHER = 'o'
     UNSORTED = 'u'
