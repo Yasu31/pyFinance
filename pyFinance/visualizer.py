@@ -9,6 +9,7 @@ def plot_expenses_by_type(expense_items):
     """
     show expense of each week and breakdown by type as stacked bar chart
     x axis is week, y axis is money spent
+    visualization could be wrong if negative expense items are present
     todo: feedback most expensive purchase every week by type
     """
     weeks = []

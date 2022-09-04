@@ -10,6 +10,7 @@ class CurrencyType(Enum):
     JPY = 'jpy'
     CHF = 'chf'
     EUR = 'eur'
+    GBP = 'gbp'
 
 
 class DataSourceType(Enum):
@@ -34,7 +35,7 @@ class ExpenseType(Enum):
     INSURANCE = 'in'  # health insurance etc
     PARTY = 'p'  # for home parties
     ENTERTAINMENT = 'e'  # sightseeing, movies, games, etc.
-    SIGHTSEEING = 'ss'  # entrance to museums, hotel fees, etc.
+    HOTEL = 'ht'  # hotel stays
     TRANSFER = 'tf'  # transferring money between my accounts. Not counted as expense
     TO_BE_REIMBURSED = 'tbr'  # will be reimbursed by the lab, so don't count as expense
     OTHER = 'o'
@@ -79,6 +80,8 @@ class ExpenseItem:
             return self.amount / 140.
         if currency_type == CurrencyType.CHF and self.currency == CurrencyType.EUR:
             return self.amount * 1.
+        if currency_type == CurrencyType.CHF and self.currency == CurrencyType.GBP:
+            return self.amount * 1.13
         raise NotImplementedError(f"conversion from {self.currency} to {currency_type} not implemented")
 
 
