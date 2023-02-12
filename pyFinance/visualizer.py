@@ -9,7 +9,7 @@ class BinningType:
     MONTH = 2
 
 
-def plot_expenses_by_type(expense_items, binning_type=BinningType.WEEK, saveimg=False):
+def plot_expenses_by_type(expense_items, binning_type=BinningType.WEEK, img_filename=None):
     """
     show expense of each week and breakdown by type as stacked bar chart
     x axis is week, y axis is money spent
@@ -78,8 +78,9 @@ def plot_expenses_by_type(expense_items, binning_type=BinningType.WEEK, saveimg=
     plt.title("Expenses by type")
     plt.xlabel("Week" if binning_type == BinningType.WEEK else "Month")
     plt.ylabel("Amount [CHF]")
-    if saveimg:
-        plt.savefig("expenses_by_type.png")
+    if img_filename is not None:
+        assert img_filename.endswith(".png")
+        plt.savefig(img_filename)
     else:
         plt.show()
         
