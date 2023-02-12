@@ -18,6 +18,13 @@ install required packages...
 pip install -r requirements.txt
 ```
 
+## Docker
+```bash
+docker build -t pyfinance .
+# go to the data directory and run your program, e.g.
+docker run --rm -it -v ${pwd}:/workdir pyfinance python main.py
+```
+
 ## track expense
 download CSV and label expenses once in a while
 
