@@ -16,6 +16,7 @@ class CurrencyType(Enum):
 class DataSourceType(Enum):
     WISE_JPY = 'wisejpy'
     WISE_CHF = 'wisechf'
+    WISE_EUR = 'wiseeur'
     CSX = 'csx'
 
 
@@ -96,6 +97,8 @@ def generateExpenseItemsFromRawCSV(filename):
         datasource_type = DataSourceType.WISE_JPY
     elif re.search('statement_[0-9]+_CHF_[0-9]{4}-[0-9]{2}-[0-9]{2}_[0-9]{4}-[0-9]{2}-[0-9]{2}.csv', filename):
         datasource_type = DataSourceType.WISE_CHF
+    elif re.search('statement_[0-9]+_EUR_[0-9]{4}-[0-9]{2}-[0-9]{2}_[0-9]{4}-[0-9]{2}-[0-9]{2}.csv', filename):
+        datasource_type = DataSourceType.WISE_EUR
     else:
         raise NotImplementedError(f"datasource type for {filename} not implemented")
     print(f"loading {filename} as {datasource_type}")
@@ -126,7 +129,7 @@ def generateExpenseItemsFromRawCSV(filename):
             amount = debit - credit
             
             expense_item = ExpenseItem(date, description, ExpenseType.UNSORTED, amount, CurrencyType.CHF)
-        elif datasource_type == DataSourceType.WISE_JPY or datasource_type == DataSourceType.WISE_CHF:
+        elif datasource_type == DataSourceType.WISE_JPY or datasource_type == DataSourceType.WISE_CHF or datasource_type == DataSourceType.WISE_EUR:
             date_string = row['Date']
             description = row['Description']
             try:
@@ -139,6 +142,9 @@ def generateExpenseItemsFromRawCSV(filename):
             if datasource_type == DataSourceType.WISE_JPY:
                 currency_type = CurrencyType.JPY
                 assert 'JPY' == row['Currency']
+            elif datasource_type == DataSourceType.WISE_EUR:
+                currency_type = CurrencyType.EUR
+                assert 'EUR' == row['Currency']
             else:
                 currency_type = CurrencyType.CHF
                 assert 'CHF' == row['Currency']

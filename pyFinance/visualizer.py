@@ -25,7 +25,7 @@ def plot_expenses_by_type(expense_items, binning_type=BinningType.WEEK, img_file
     for expense_item in expense_items:
         week = expense_item.date.isocalendar()[1]
         month = expense_item.date.month
-        year = expense_item.date.isocalendar()[0]
+        year = expense_item.date.year
         # get readable week name
         start_date = date.fromisocalendar(year, week, 1)
         if binning_type == BinningType.WEEK:
