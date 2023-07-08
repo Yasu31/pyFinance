@@ -104,17 +104,18 @@ def generateExpenseItemsFromRawCSV(filename):
         datasource_type = DataSourceType.NEON
     else:
         raise NotImplementedError(f"datasource type for {filename} not implemented")
-    print(f"loading {filename} as {datasource_type}")
 
     with open(filename, 'r') as f:
         skiprows = 0
+        skipfooter = 0
         sep = ','
         if datasource_type == DataSourceType.CSX:
             # data begins from 6th row
             skiprows = 5
+            skipfooter = 1
         if datasource_type == DataSourceType.NEON:
             sep = ';'
-        data = pandas.read_csv(f, skiprows=skiprows, sep=sep)
+        data = pandas.read_csv(f, skiprows=skiprows, sep=sep, skipfooter=skipfooter, engine='python')
     expense_items = []
     for index, row in data.iterrows():
         if datasource_type == DataSourceType.CSX:
@@ -245,7 +246,8 @@ def addNewItemsToDatabase():
                     break
             if is_new_flag:
                 new_expense_items.append(new_expense_item_candidate)
-        print(f"found {len(new_expense_items)} new items in {filename}")
+        if len(new_expense_items) > 0:
+            print(f"found {len(new_expense_items)} new items in {filename}")
     expense_database.extend(new_expense_items)
     saveExpenseItems(expense_database)
 
