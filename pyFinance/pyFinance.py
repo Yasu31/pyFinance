@@ -157,7 +157,6 @@ def generateExpenseItemsFromRawCSV(filename):
             expense_item = ExpenseItem(date, description, ExpenseType.UNSORTED, amount, currency_type, comment)
         
         elif datasource_type == DataSourceType.NEON:
-            print(row)
             date_string = row['Date']
             description = row['Description']
             comment = row['Subject']
@@ -258,5 +257,16 @@ def addLabelsToDatabase():
     expense_database = loadExpenseItems()
     for expense_item in expense_database:
         if expense_item.type == ExpenseType.UNSORTED:
-            expense_item.askExpenseType()
+            # do some hardcoded guessing
+            grocery_keys = ["Migros", "Coop"]
+            transport_keys = ["SBB"]
+            restaurant_keys = ["Orient Catering", "Uzh Zentrum", "Sv (schweiz) Ag"]
+            if any(key in expense_item.description for key in grocery_keys) or any(key in expense_item.comment for key in grocery_keys):
+                expense_item.type = ExpenseType.GROCERY
+            elif any(key in expense_item.description for key in transport_keys) or any(key in expense_item.comment for key in transport_keys):
+                expense_item.type = ExpenseType.TRANSPORTATION
+            elif any(key in expense_item.description for key in restaurant_keys) or any(key in expense_item.comment for key in restaurant_keys):
+                expense_item.type = ExpenseType.RESTAURANT
+            else:
+                expense_item.askExpenseType()
     saveExpenseItems(expense_database)
