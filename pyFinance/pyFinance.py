@@ -18,6 +18,7 @@ class DataSourceType(Enum):
     WISE_CHF = 'wisechf'
     WISE_EUR = 'wiseeur'
     CSX = 'csx'
+    NEON = 'neon'
 
 
 class ExpenseType(Enum):
@@ -99,16 +100,21 @@ def generateExpenseItemsFromRawCSV(filename):
         datasource_type = DataSourceType.WISE_CHF
     elif re.search('statement_[0-9]+_EUR_[0-9]{4}-[0-9]{2}-[0-9]{2}_[0-9]{4}-[0-9]{2}-[0-9]{2}.csv', filename):
         datasource_type = DataSourceType.WISE_EUR
+    elif re.search('[0-9]{4}_account_statements.csv', filename):
+        datasource_type = DataSourceType.NEON
     else:
         raise NotImplementedError(f"datasource type for {filename} not implemented")
     print(f"loading {filename} as {datasource_type}")
 
     with open(filename, 'r') as f:
         skiprows = 0
+        sep = ','
         if datasource_type == DataSourceType.CSX:
             # data begins from 6th row
             skiprows = 5
-        data = pandas.read_csv(f, skiprows=skiprows)
+        if datasource_type == DataSourceType.NEON:
+            sep = ';'
+        data = pandas.read_csv(f, skiprows=skiprows, sep=sep)
     expense_items = []
     for index, row in data.iterrows():
         if datasource_type == DataSourceType.CSX:
@@ -149,6 +155,26 @@ def generateExpenseItemsFromRawCSV(filename):
                 currency_type = CurrencyType.CHF
                 assert 'CHF' == row['Currency']
             expense_item = ExpenseItem(date, description, ExpenseType.UNSORTED, amount, currency_type, comment)
+        
+        elif datasource_type == DataSourceType.NEON:
+            print(row)
+            date_string = row['Date']
+            description = row['Description']
+            comment = row['Subject']
+            if type(comment) != str:
+                comment = ""
+            amount = -float(row['Amount'])
+            # add implementation if needed
+            assert np.isnan(row["Original amount"])
+            assert np.isnan(row["Original currency"])
+            assert np.isnan(row["Exchange rate"])
+            assert row["Wise"] == "no"
+            try:
+                date = datetime.strptime(date_string, '%Y-%m-%d')
+            except ValueError:
+                print(f"Error: date \"{date_string}\" is not in correct format for item \"{description}\", skipping")
+                continue
+            expense_item = ExpenseItem(date, description, ExpenseType.UNSORTED, amount, CurrencyType.CHF, comment)
             
         expense_items.append(expense_item)
     return expense_items
