@@ -260,9 +260,9 @@ def addLabelsToDatabase():
     for expense_item in expense_database:
         if expense_item.type == ExpenseType.UNSORTED:
             # do some hardcoded guessing
-            grocery_keys = ["Migros", "Coop"]
-            transport_keys = ["SBB"]
-            restaurant_keys = ["Orient Catering", "Uzh Zentrum", "Sv (schweiz) Ag"]
+            grocery_keys = ["Migros", "Coop", "Migrolino"]
+            transport_keys = ["SBB", "Sbb"]
+            restaurant_keys = ["Orient Catering", "Uzh Zentrum", "Sv (schweiz) Ag", "Lemon Grass"] 
             if any(key in expense_item.description for key in grocery_keys) or any(key in expense_item.comment for key in grocery_keys):
                 expense_item.type = ExpenseType.GROCERY
             elif any(key in expense_item.description for key in transport_keys) or any(key in expense_item.comment for key in transport_keys):
