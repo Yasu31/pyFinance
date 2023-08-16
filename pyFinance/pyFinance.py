@@ -60,7 +60,7 @@ class ExpenseItem:
         self.comment = comment
     
     def askExpenseType(self):
-        print(f"what type of expense is \"{self.description}\" on {self.date}, costing {self.amount} {self.currency}?")
+        print(f"what type of expense is\nname\t\"{self.description}\"\ndate:\t{self.date}\nnote:\t{self.comment}\ncost:\t{self.amount} {self.currency}")
         options = ""
         for i, expense_type in enumerate(ExpenseType):
             options += f"{expense_type.value}: {expense_type.name}\n"
