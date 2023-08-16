@@ -139,13 +139,16 @@ def generateExpenseItemsFromRawCSV(filename):
         elif datasource_type == DataSourceType.WISE_JPY or datasource_type == DataSourceType.WISE_CHF or datasource_type == DataSourceType.WISE_EUR:
             date_string = row['Date']
             description = row['Description']
+            note = row['Note']  # notes added by me to Wise, helps a lot for "Japan Bridge Center"
             try:
                 date = datetime.strptime(date_string, '%d-%m-%Y')
             except ValueError:
                 print(f"Error: date \"{date_string}\" is not in correct format for item \"{description}\", skipping")
                 continue
             amount = -float(row['Amount'])
-            comment = f"merchant: {row['Merchant']}, Wise ID: {row['TransferWise ID']}, Note: {row['Note']}, total fees: {row['Total fees']}"
+            comment = f"merchant: {row['Merchant']}, Wise ID: {row['TransferWise ID']}, total fees: {row['Total fees']}"
+            if type(note) == str:
+                comment = f"{note} | {comment}"
             if datasource_type == DataSourceType.WISE_JPY:
                 currency_type = CurrencyType.JPY
                 assert 'JPY' == row['Currency']
