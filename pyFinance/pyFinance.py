@@ -79,7 +79,7 @@ class ExpenseItem:
         if self.currency == currency_type:
             return self.amount
         if currency_type == CurrencyType.CHF and self.currency == CurrencyType.JPY:
-            return self.amount / 140.
+            return self.amount / 160.
         if currency_type == CurrencyType.CHF and self.currency == CurrencyType.EUR:
             return self.amount * 1.
         if currency_type == CurrencyType.CHF and self.currency == CurrencyType.GBP:
